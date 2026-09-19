@@ -1,53 +1,173 @@
-<!doctype html><html lang="fa" dir="rtl"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>دعوتنامه عروسی مریم و میلاد</title>
 <style>
-body{margin:0;background:#111;font-family:Tahoma,Arial;color:#fff}.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px}
-.card{position:relative;width:min(430px,100%);overflow:hidden;border-radius:24px;box-shadow:0 20px 70px #000}.card img{width:100%;display:block}
-.panel{position:absolute;left:14px;right:14px;bottom:14px;background:rgba(20,14,10,.82);backdrop-filter:blur(8px);border:1px solid rgba(255,215,150,.45);border-radius:18px;padding:13px;text-align:center}
-button{border:0;cursor:pointer;background:linear-gradient(135deg,#f8e4ad,#c99a45);padding:11px 22px;border-radius:999px;font:inherit;font-weight:bold}.small{font-size:11px;opacity:.8;margin-top:7px}
-</style></head><body><div class="wrap"><div class="card">
-<img src="invitation.png" alt="دعوتنامه عروسی مریم و میلاد"><div class="panel">
-<button id="musicBtn">🎵 پخش ماندگار</button><div class="small">با لمس دکمه، موسیقی داخل کارت پخش می‌شود.</div>
-</div></div></div>
-<audio id="music" src="Mandegar.mp3" preload="auto" autoplay loop></audio>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;overflow:hidden}
+body{
+  background:radial-gradient(circle at 50% 35%,#5a4738 0,#241b17 48%,#0f0d0c 100%);
+  font-family:Tahoma,Arial,sans-serif;color:#fff;
+}
+.stage{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:22px;position:relative;overflow:hidden;
+}
+.stage:before{
+  content:"";position:absolute;inset:-20%;
+  background:radial-gradient(circle,rgba(255,226,174,.12),transparent 45%);
+  pointer-events:none;
+}
+.envelope{
+  width:min(430px,92vw);
+  aspect-ratio:1.48/1;
+  position:relative;cursor:pointer;
+  filter:drop-shadow(0 24px 35px rgba(0,0,0,.48));
+  perspective:1000px;
+}
+.env-body{
+  position:absolute;inset:0;border-radius:8px 8px 16px 16px;
+  background:linear-gradient(145deg,#d6b07a,#a97b45);
+  overflow:hidden;border:1px solid rgba(255,235,193,.45);
+}
+.env-body:before,.env-body:after{
+  content:"";position:absolute;bottom:0;width:72%;height:100%;
+  background:rgba(90,53,25,.18);
+}
+.env-body:before{left:-28%;clip-path:polygon(0 100%,100% 0,100% 100%)}
+.env-body:after{right:-28%;clip-path:polygon(0 0,100% 100%,0 100%)}
+.flap{
+  position:absolute;z-index:4;left:0;top:0;width:100%;height:65%;
+  background:linear-gradient(145deg,#e4c28e,#b98750);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:50% 0;
+  transition:transform 1s cubic-bezier(.2,.75,.2,1);
+  backface-visibility:hidden;
+  border-top:1px solid rgba(255,244,214,.5);
+}
+.seal{
+  position:absolute;z-index:7;left:50%;top:54%;transform:translate(-50%,-50%);
+  width:62px;height:62px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff0c7,#d29a55 48%,#8a5428);
+  border:2px solid rgba(255,244,214,.9);
+  box-shadow:0 7px 18px rgba(0,0,0,.32),inset 0 2px 5px rgba(255,255,255,.45);
+  display:flex;align-items:center;justify-content:center;
+  font-size:27px;color:#7a3e28;
+  transition:opacity .45s,transform .7s cubic-bezier(.2,.8,.2,1);
+}
+.seal:after{
+  content:"";position:absolute;inset:5px;border-radius:50%;
+  border:1px solid rgba(122,62,40,.35);
+}
+.sparkles{position:absolute;z-index:9;inset:0;pointer-events:none;opacity:0}
+.sparkles i{position:absolute;font-style:normal;color:#ffe8ae;font-size:22px;opacity:0}
+.sparkles i:nth-child(1){left:12%;top:20%}
+.sparkles i:nth-child(2){right:13%;top:28%}
+.sparkles i:nth-child(3){left:20%;bottom:20%}
+.sparkles i:nth-child(4){right:20%;bottom:18%}
+.sparkles i:nth-child(5){left:50%;top:8%}
+
+.ribbon{
+  position:absolute;z-index:5;left:50%;top:0;bottom:0;width:10px;
+  transform:translateX(-50%);background:rgba(92,52,24,.14);
+}
+.card{
+  position:absolute;z-index:2;left:7%;right:7%;top:8%;bottom:5%;
+  border-radius:8px;overflow:hidden;background:#fff;
+  box-shadow:0 8px 28px rgba(0,0,0,.35);
+  transform:translateY(20px) scale(.94);
+  opacity:0;
+  transition:transform 1s cubic-bezier(.2,.8,.2,1),opacity .65s;
+}
+.card img{width:100%;height:100%;display:block;object-fit:cover}
+.hint{
+  position:absolute;z-index:8;left:50%;bottom:10%;
+  transform:translateX(-50%);
+  width:100%;text-align:center;font-size:14px;
+  text-shadow:0 2px 7px #000;
+  transition:opacity .4s;
+}
+.hint strong{display:block;font-size:18px;margin-bottom:6px}
+.open .flap{transform:rotateX(180deg)}
+.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.35) rotate(18deg)}
+.open .card{transform:translateY(-30px) scale(1.02);opacity:1;transition-delay:.25s}
+.open .hint{opacity:0}
+.open .sparkles{opacity:1}
+.open .sparkles i{animation:twinkle 1.1s ease-out forwards}
+.open .sparkles i:nth-child(2){animation-delay:.12s}
+.open .sparkles i:nth-child(3){animation-delay:.2s}
+.open .sparkles i:nth-child(4){animation-delay:.28s}
+.open .sparkles i:nth-child(5){animation-delay:.36s}
+@keyframes twinkle{
+  0%{opacity:0;transform:scale(.3) translateY(10px) rotate(0)}
+  35%{opacity:1;transform:scale(1.2) translateY(0) rotate(45deg)}
+  100%{opacity:0;transform:scale(.5) translateY(-30px) rotate(90deg)}
+}
+.musicBtn{
+  position:fixed;z-index:20;right:14px;bottom:14px;
+  border:0;border-radius:999px;padding:10px 15px;
+  background:rgba(20,14,10,.78);color:#fff;
+  border:1px solid rgba(255,215,150,.5);
+  font:inherit;font-size:12px;backdrop-filter:blur(8px);
+}
+@media (max-height:650px){
+  .stage{padding:14px}.envelope{width:min(380px,88vw)}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="envelope" id="envelope" aria-label="باز کردن پاکت دعوتنامه">
+    <div class="env-body"></div>
+    <div class="card"><img src="invitation.png" alt="دعوتنامه عروسی مریم و میلاد"></div>
+    <div class="ribbon"></div>
+    <div class="flap"></div>
+    <div class="seal"><span>♥</span></div>
+    <div class="sparkles" aria-hidden="true"><i>✦</i><i>✧</i><i>✦</i><i>✧</i><i>✦</i></div>
+    <div class="hint">
+      <strong>دعوتنامه مریم و میلاد</strong>
+      برای باز کردن پاکت، صفحه را لمس کنید
+    </div>
+  </div>
+</div>
+
+<button class="musicBtn" id="musicBtn">🎵 پخش ماندگار</button>
+<audio id="music" src="Mandegar.mp3" preload="auto" loop></audio>
+
 <script>
-const a=document.getElementById('music');
-const b=document.getElementById('musicBtn');
+const envelope=document.getElementById('envelope');
+const music=document.getElementById('music');
+const musicBtn=document.getElementById('musicBtn');
+let opened=false;
 
-async function startMusic(){
+async function openInvitation(){
+  if(opened)return;
+  opened=true;
+  envelope.classList.add('open');
+
+  // همان لمس کاربر هم پاکت را باز می‌کند و هم اجازه پخش صدا را می‌دهد.
   try{
-    await a.play();
-    b.textContent='⏸ توقف آهنگ';
-    return true;
+    await music.play();
+    musicBtn.textContent='⏸ توقف آهنگ';
   }catch(e){
-    return false;
+    musicBtn.textContent='🎵 پخش ماندگار';
   }
 }
 
-// تلاش برای پخش خودکار هنگام باز شدن کارت
-startMusic();
+envelope.addEventListener('pointerup',openInvitation);
 
-// اگر مرورگر پخش خودکار صدا را مسدود کرد، اولین لمس/کلیک صفحه آهنگ را شروع می‌کند.
-async function firstTouch(){
-  const started = await startMusic();
-  if(started){
-    document.removeEventListener('pointerdown', firstTouch);
-    document.removeEventListener('touchstart', firstTouch);
-  }
-}
-document.addEventListener('pointerdown', firstTouch, {passive:true});
-document.addEventListener('touchstart', firstTouch, {passive:true});
-
-b.addEventListener('click', async (e)=>{
+musicBtn.addEventListener('click',async(e)=>{
   e.stopPropagation();
-  if(a.paused){
-    await startMusic();
+  if(music.paused){
+    try{await music.play();musicBtn.textContent='⏸ توقف آهنگ';}
+    catch(e){musicBtn.textContent='🎵 دوباره لمس کنید';}
   }else{
-    a.pause();
-    b.textContent='🎵 پخش ماندگار';
+    music.pause();
+    musicBtn.textContent='🎵 پخش ماندگار';
   }
 });
-
-a.addEventListener('play',()=>b.textContent='⏸ توقف آهنگ');
-</script></body></html>
+</script>
+</body>
+</html>
