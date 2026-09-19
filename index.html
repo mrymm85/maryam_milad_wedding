@@ -10,9 +10,44 @@ button{border:0;cursor:pointer;background:linear-gradient(135deg,#f8e4ad,#c99a45
 <img src="invitation.png" alt="دعوتنامه عروسی مریم و میلاد"><div class="panel">
 <button id="musicBtn">🎵 پخش ماندگار</button><div class="small">با لمس دکمه، موسیقی داخل کارت پخش می‌شود.</div>
 </div></div></div>
-<audio id="music" src="Mandegar.mp3" preload="metadata"></audio>
+<audio id="music" src="Mandegar.mp3" preload="auto" autoplay loop></audio>
 <script>
-const a=document.getElementById('music'),b=document.getElementById('musicBtn');
-b.onclick=async()=>{if(a.paused){try{await a.play();b.textContent='⏸ توقف آهنگ'}catch(e){b.textContent='🎵 دوباره لمس کنید'}}else{a.pause();b.textContent='🎵 پخش ماندگار'}};
-a.onended=()=>b.textContent='🎵 پخش دوباره';
+const a=document.getElementById('music');
+const b=document.getElementById('musicBtn');
+
+async function startMusic(){
+  try{
+    await a.play();
+    b.textContent='⏸ توقف آهنگ';
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+
+// تلاش برای پخش خودکار هنگام باز شدن کارت
+startMusic();
+
+// اگر مرورگر پخش خودکار صدا را مسدود کرد، اولین لمس/کلیک صفحه آهنگ را شروع می‌کند.
+async function firstTouch(){
+  const started = await startMusic();
+  if(started){
+    document.removeEventListener('pointerdown', firstTouch);
+    document.removeEventListener('touchstart', firstTouch);
+  }
+}
+document.addEventListener('pointerdown', firstTouch, {passive:true});
+document.addEventListener('touchstart', firstTouch, {passive:true});
+
+b.addEventListener('click', async (e)=>{
+  e.stopPropagation();
+  if(a.paused){
+    await startMusic();
+  }else{
+    a.pause();
+    b.textContent='🎵 پخش ماندگار';
+  }
+});
+
+a.addEventListener('play',()=>b.textContent='⏸ توقف آهنگ');
 </script></body></html>
