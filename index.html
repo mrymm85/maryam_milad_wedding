@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>دعوتنامه عروسی مریم و میلاد</title>
 
 <style>
@@ -18,9 +19,15 @@ html,body{
 }
 
 body{
-  background:
-    radial-gradient(circle at center,#fff9f5 0%,#f2ddd5 55%,#dfbeb3 100%);
+  background:radial-gradient(
+    circle at center,
+    #fff9f5 0%,
+    #f2ddd5 55%,
+    #dfbeb3 100%
+  );
+
   font-family:Tahoma,Arial,sans-serif;
+
   display:flex;
   justify-content:center;
   align-items:center;
@@ -47,8 +54,15 @@ body{
   position:absolute;
   inset:0;
   border-radius:14px;
-  background:linear-gradient(145deg,#f8e5dc,#dfb9aa);
-  box-shadow:0 20px 50px rgba(80,45,40,.25);
+
+  background:linear-gradient(
+    145deg,
+    #f8e5dc,
+    #dfb9aa
+  );
+
+  box-shadow:
+    0 20px 50px rgba(80,45,40,.25);
 }
 
 .card{
@@ -57,11 +71,16 @@ body{
   width:88%;
   height:88%;
   bottom:4%;
+
   z-index:2;
+
   border-radius:8px;
   overflow:hidden;
+
   background:#fffaf5;
-  box-shadow:0 8px 25px rgba(80,50,45,.2);
+
+  box-shadow:
+    0 8px 25px rgba(80,50,45,.2);
 
   transform:translateY(45px);
   opacity:.15;
@@ -84,9 +103,14 @@ body{
   right:0;
   top:0;
   height:63%;
+
   z-index:4;
 
-  background:linear-gradient(160deg,#f8ded4,#e2b9ac);
+  background:linear-gradient(
+    160deg,
+    #f8ded4,
+    #e2b9ac
+  );
 
   clip-path:polygon(
     0 0,
@@ -95,7 +119,9 @@ body{
   );
 
   transform-origin:top center;
-  transition:transform .9s cubic-bezier(.2,.8,.2,1);
+
+  transition:
+    transform .9s cubic-bezier(.2,.8,.2,1);
 }
 
 .pocket{
@@ -104,9 +130,14 @@ body{
   right:0;
   bottom:0;
   height:64%;
+
   z-index:5;
 
-  background:linear-gradient(145deg,#f0d1c5,#dfb8aa);
+  background:linear-gradient(
+    145deg,
+    #f0d1c5,
+    #dfb8aa
+  );
 
   clip-path:polygon(
     0 0,
@@ -116,22 +147,28 @@ body{
     0 100%
   );
 
-  border-radius:0 0 14px 14px;
+  border-radius:
+    0 0 14px 14px;
 }
 
 .seal{
   position:absolute;
+
   left:50%;
   top:50%;
-  transform:translate(-50%,-50%);
+
+  transform:
+    translate(-50%,-50%);
 
   width:60px;
   height:60px;
+
   border-radius:50%;
 
   z-index:6;
 
   background:#c99586;
+
   color:white;
 
   display:flex;
@@ -140,7 +177,8 @@ body{
 
   font-size:26px;
 
-  box-shadow:0 5px 16px rgba(80,45,40,.25);
+  box-shadow:
+    0 5px 16px rgba(80,45,40,.25);
 
   transition:
     opacity .4s ease,
@@ -149,20 +187,22 @@ body{
 
 .hint{
   position:absolute;
+
   top:calc(100% + 18px);
   left:50%;
+
   transform:translateX(-50%);
 
   white-space:nowrap;
 
   color:#684944;
+
   font-size:14px;
+
   opacity:.85;
 
   transition:opacity .4s;
 }
-
-/* حالت باز شدن پاکت */
 
 .open .flap{
   transform:rotateX(180deg);
@@ -176,6 +216,7 @@ body{
 
 .open .seal{
   opacity:0;
+
   transform:
     translate(-50%,-50%)
     scale(.5);
@@ -186,9 +227,11 @@ body{
 }
 
 @media(max-height:650px){
+
   .envelope-wrap{
     transform:scale(.84);
   }
+
 }
 </style>
 </head>
@@ -205,21 +248,19 @@ body{
 
     <div class="envelope">
 
-      <!-- دعوتنامه -->
       <div class="card">
+
         <img
           src="دعوتنامه.png"
           alt="دعوتنامه عروسی مریم و میلاد"
         >
+
       </div>
 
-      <!-- درِ پاکت -->
       <div class="flap"></div>
 
-      <!-- قسمت جلوی پاکت -->
       <div class="pocket"></div>
 
-      <!-- مهر -->
       <div class="seal">♥</div>
 
     </div>
@@ -231,7 +272,6 @@ body{
   </div>
 
 </div>
-
 
 <script>
 
@@ -245,18 +285,7 @@ document
 
   opened = true;
 
-  /* باز شدن پاکت */
   this.classList.add("open");
-
-  /*
-    با همان لمس کاربر،
-    صفحه رسمی آهنگ عروس مهتاب باز می‌شود.
-  */
-
-  window.open(
-    "https://play.radiojavan.com/song/faramarz-assef-aroose-mahtab",
-    "_blank"
-  );
 
 });
 
